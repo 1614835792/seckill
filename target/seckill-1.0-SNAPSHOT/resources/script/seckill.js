@@ -73,11 +73,11 @@ var seckill={
         }else if(nowTime<startTime){
             //秒杀未开始，计时
             var killTime=new Date(startTime+1000);
-            seckill.countdown(killTime,function (event) {
+            seckillBox.countdown(killTime,function (event) {
                 var format=event.stafTime('秒杀倒计时：%D天 %H时 %M分 %s秒');
-                seckillBox.html(format).on('finish.countdown',function(){
-                    seckill.handleSeckillKill(seckillId,seckillBox);
-                });
+                seckillBox.html(format);
+            }).on('finish.countdown',function(){
+                seckill.handleSeckillKill(seckillId,seckillBox);
             });
         }else{
             //秒杀开始

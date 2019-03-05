@@ -32,7 +32,7 @@ select row_count() into insert_count;
 if(insert_count=0)then
 rollback ;
 set r_result=0;
-elseif(inset_count<0)then
+elseif(insert_count<0)then
 rollback ;
 set r_result=-2;
 else commit ;

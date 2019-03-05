@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,5 +48,15 @@ public class SeckillServiceTest {
         String md5="d93c335bdd762f746369d6bf50574a92";
         SeckillExecution seckillExecution=seckillService.executeSeckill(id,phone,md5);
 
+    }
+    @Test
+    public void executeSeckillProcedure(){
+         long seckillId=1001;
+         long phone =136892541352L;
+         Exposer exposer=seckillService.exportSeckillUrl(seckillId);
+         if(exposer.isExposed()){
+                String md5=exposer.getMd5();
+                seckillService.executeSeckillProcedure(seckillId,phone,md5);
+         }
     }
 }

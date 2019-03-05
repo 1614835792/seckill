@@ -29,7 +29,6 @@ public class SeckillController {
      //获取列表页
         List<Seckill>list= seckillService.getSeckillList();
         model.addAttribute("list",list);
-        model.addAttribute("test","测试");
         return "list";
     }
     @RequestMapping(value="/{seckillId}/detail",method = RequestMethod.GET)
@@ -69,7 +68,7 @@ public class SeckillController {
         }
          SeckillResult<SeckillExecution>result;
          try{
-             SeckillExecution execution=seckillService.executeSeckill(seckillId,phone,md5);
+             SeckillExecution execution=seckillService.executeSeckillProcedure(seckillId,phone,md5);
              return new SeckillResult<SeckillExecution>(true,execution);
          }
          catch(SeckillCloseException e){
