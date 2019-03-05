@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../common/tag.jsp" %>
 <html>
 <head>
     <title>秒杀列表页</title>
@@ -26,8 +27,6 @@
                 <tbody>
                 <c:forEach var="sk" items="${list}">
                     <tr>
-                        <td>${sk}</td>
-                        <td>${list}</td>
                         <td>${sk.name}</td>
                         <td>${sk.number}</td>
                         <td>

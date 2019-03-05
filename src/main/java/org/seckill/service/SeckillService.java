@@ -20,4 +20,6 @@ public interface SeckillService {
     /*执行秒杀操作*/
     SeckillExecution executeSeckill(long seckillId, long userPhone, String md5)
             throws SeckillException, RepeatKillException,SeckillException;
+    SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5)
+            throws SeckillException, RepeatKillException,SeckillException;
 }

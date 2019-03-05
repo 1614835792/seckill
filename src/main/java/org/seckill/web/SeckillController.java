@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/seckill")
 public class SeckillController {
     @Autowired
     private SeckillService seckillService;
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @RequestMapping(value="/list",method = RequestMethod.GET)
-    public List<Seckill> list(){
+    public String list(Model model){
      //获取列表页
         List<Seckill>list= seckillService.getSeckillList();
-      /*  model.addAttribute("list",list);
-        model.addAttribute("test","测试");*/
-        return list;
+        model.addAttribute("list",list);
+        model.addAttribute("test","测试");
+        return "list";
     }
     @RequestMapping(value="/{seckillId}/detail",method = RequestMethod.GET)
     public String detail(@PathVariable("seckillId")Long seckillId,Model model){
@@ -60,6 +60,7 @@ public class SeckillController {
     }
     @RequestMapping(value="/{seckillId}/{md5}/execution",
     method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
     public SeckillResult<SeckillExecution>execute(@PathVariable("seckillId")Long seckillId,
                                                   @PathVariable("md5")String md5,
                                                   @CookieValue(value="killPhone",required = false) Long phone){
@@ -68,7 +69,7 @@ public class SeckillController {
         }
          SeckillResult<SeckillExecution>result;
          try{
-             SeckillExecution execution=seckillService.executeSeckill(phone,seckillId,md5);
+             SeckillExecution execution=seckillService.executeSeckill(seckillId,phone,md5);
              return new SeckillResult<SeckillExecution>(true,execution);
          }
          catch(SeckillCloseException e){
@@ -85,8 +86,10 @@ public class SeckillController {
          }
     }
     @RequestMapping(value="/time/now",method = RequestMethod.GET)
+    @ResponseBody
     public SeckillResult<Long>time(){
           Date now=new Date();
+        logger.info("查询系统时间"+now.getTime());
           return new SeckillResult<>(true,now.getTime() );
     }
 }
